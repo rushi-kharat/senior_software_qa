@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Senior QA Engineer | 6+ Years Automation Expert | Playwright, Selenium, API, Data, Cloud" />
+  <meta name="keywords" content="QA, Automation, Testing, Playwright, Selenium, AWS, Banking, Healthcare" />
+  <title>Senior QA Engineer | 6+ Years Automation Expert</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/framer-motion@11/dist/framer-motion.js"></script>
+
+  <style>
+    /* Styles from your requirements */
+    * { box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+    .custom-cursor {
+      cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="%233b82f6"><circle cx="12" cy="12" r="8" fill="%233b82f6" opacity="0.3"/><circle cx="12" cy="12" r="4" fill="%233b82f6"/></svg>') 12 12, auto;
+    }
+    .glass-morphism {
+      background: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.5);
+      border-radius: 1rem;
+    }
+    .dark .glass-morphism {
+      background: rgba(30, 41, 59, 0.8);
+      border: 1px solid rgba(148, 163, 184, 0.2);
+    }
+    .hover-lift {
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .hover-lift:hover {
+      transform: translateY(-8px) scale(1.02);
+      box-shadow: 0 20px 40px rgba(59,130,246,0.2);
+    }
+  </style>
+</head>
+<body class="bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 dark:from-slate-900 dark:via-purple-900/30 dark:to-slate-900 transition-colors duration-300 custom-cursor">
+  <div id="root"></div>
+
+  <script type="text/babel">
+    const { useState, useEffect } = React;
+    const { motion, AnimatePresence } = FramerMotion;
+
+    // Translations object for multiple languages — English UK/US, Japanese, French, Spanish, Chinese, Arabic 
+    const translations = {
+      "en-GB": {
+        header: "QA Pro",
+        hero: {
+          title: "Senior QA & Automation Engineer",
+          subtitle: "6+ years shipping bulletproof software across Healthcare, Banking, Telecom & CRM",
+          cta1: "📥 Download Resume",
+          cta2: "📞 Book a Call"
+        },
+        clock: { live: "⏰ Live Clock - Your Local Time" },
+        skillsTitle: "🎯 Core Expertise",
+        contact: {
+          title: "Get In Touch",
+          name: "Your Name",
+          email: "Your Email Address",
+          message: "Tell me about your QA project or opportunity...",
+          submit: "Send Message →",
+          secure: "🔒 Powered by Google Forms"
+        }
+      },
+      // Add translations for other languages similarly if needed
+    };
+
+    // Skills clusters organized
+    const skills = [
+      { category: "Core QA Strategy", tools: ["Manual Testing", "Regression Testing", "Smoke Suite", "Ad-hoc Testing", "RTM Analysis", "NFR Testing", "Shift-Left Testing", "Test Planning", "Agile/Scrum", "BDD/TDD"] },
+      { category: "UI Automation", tools: ["Playwright", "Selenium", "Cypress JS", "TestComplete FW", "Robot Framework", "Smart Locators", "Testim", "Allure Reports", "Pytest", "AI-driven Automation"] },
+      { category: "API Testing", tools: ["Postman", "Python Requests", "SOAPUI", "REST/SOAP", "Security Headers", "OWASP Top 10", "Burp Suite", "Trellix Security Testing"] },
+      { category: "Data & ETL", tools: ["SQL", "DBeaver", "Postgres CLI", "Oracle DB", "SSMS", "Snowflake", "Aurora DB", "ETL Testing", "Informatica", "SSIS", "Pandas/Numpy"] },
+      { category: "BI & Reporting", tools: ["Tableau", "Report Testing", "DWH Testing", "Allure HTML Reports", "BI Testing", "Data Validation", "Performance Metrics"] },
+      { category: "Performance & Load", tools: ["JMeter", "BlazeMeter", "Load Testing", "Performance KPIs", "Trend Analysis", "Memory Profiling", "Thread Groups"] },
+      { category: "Cloud & DevOps", tools: ["AWS S3/RDS/ECS/EFS", "Lambda", "CloudWatch", "EventBridge", "CodePipeline", "Jenkins CI/CD", "GitHub Actions", "Rundeck", "Amazon WorkSpaces"] },
+      { category: "Tools & IDE", tools: ["VS Code", "PyCharm", "Git/GitHub", "Jira", "HP ALM", "Bugzilla", "Slack Integration", "Email Integration"] },
+      { category: "Languages", tools: ["Python (Advanced)", "Advanced Python", "Shell Commands", "Unix Testing", "Bash Scripts", "GitHub Copilot"] },
+      { category: "Domains", tools: ["Healthcare", "Pharma", "Life Sciences", "Telecom", "Banking", "CRM", "Financial Services"] }
+    ];
+
+    function App() {
+      const [locale, setLocale] = useState("en-GB");
+      const [time, setTime] = useState("");
+      const [location, setLocation] = useState({ city:"Detecting...", country:"Global", tz:"UTC" });
+      const [formSubmitted, setFormSubmitted] = useState(false);
+      
+      const t = translations[locale] || translations["en-GB"];
+
+      // Location detection using Geolocation + reverse geocode
+      useEffect(() => {
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(async (pos) => {
+            const lat = pos.coords.latitude;
+            const lon = pos.coords.longitude;
+            try {
+              const resp = await fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lon}&localityLanguage=en`);
+              const data = await resp.json();
+              setLocation({
+                city: data.city || data.locality || "Unknown",
+                country: data.countryName || "Unknown",
+                tz: Intl.DateTimeFormat().resolvedOptions().timeZone || "UTC"
+              });
+            } catch {
+              setLocation({city:"Unknown", country:"Unknown", tz: "UTC" });
+            }
+          }, () => {
+            setLocation({city:"Unknown", country:"Unknown", tz:Intl.DateTimeFormat().resolvedOptions().timeZone || "UTC"});
+          });
+        }
+      }, []);
+
+      // Live clock updating every second with locale/timezone awareness
+      useEffect(() => {
+        function updateClock() {
+          const now = new Date();
+          const formatter = new Intl.DateTimeFormat(locale.replace("-", "_"), {dateStyle:"medium", timeStyle:"medium", timeZone: location.tz});
+          setTime(formatter.format(now));
+        }
+        updateClock();
+        const interval = setInterval(updateClock, 1000);
+        return () => clearInterval(interval);
+      }, [locale, location.tz]);
+
+      // Handle contact form submit (Google Forms submission uses no-cors, so optimistic UI)
+      function handleSubmit(e) {
+        e.preventDefault();
+        setFormSubmitted(true);
+        setTimeout(() => setFormSubmitted(false), 5000);
+      }
+
+      return (
+        <div className="min-h-screen font-sans bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 dark:from-slate-900 dark:via-purple-900/30 dark:to-slate-900 custom-cursor transition-colors duration-300">
+          {/* Header */}
+          <header className="sticky top-0 z-50 glass-morphism shadow-lg p-4 flex justify-between items-center max-w-7xl mx-auto">
+            <h1 className="text-2xl font-black bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">QA Pro</h1>
+            <select
+              value={locale}
+              onChange={e => setLocale(e.target.value)}
+              className="px-3 py-1 rounded-lg bg-blue-50 dark:bg-slate-700 border border-blue-200 dark:border-slate-600 font-semibold text-sm cursor-pointer"
+            >
+              <option value="en-GB">🇬🇧 EN-UK</option>
+              <option value="en-US">🇺🇸 EN-US</option>
+              <option value="ja">🇯🇵 日本語</option>
+              <option value="fr">🇫🇷 Français</option>
+              <option value="es">🇪🇸 Español</option>
+              <option value="zh">🇨🇳 中文</option>
+              <option value="ar">🇸🇦 العربية</option>
+            </select>
+          </header>
+
+          {/* Live Clock & Location */}
+          <motion.div initial={{opacity:0, y:20}} animate={{opacity:1,y:0}} className="glass-morphism p-8 rounded-3xl shadow-xl mb-16 text-center max-w-3xl mx-auto glow-effect">
+            <p className="text-sm font-semibold opacity-75 mb-2">{t.clock.live}</p>
+            <p className="text-4xl font-mono font-bold text-gradient bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-3">{time}</p>
+            <p className="text-xs opacity-70">📍 {location.city}, {location.country} ⏰ {location.tz}</p>
+          </motion.div>
+
+          {/* Hero Section */}
+          <section className="relative overflow-hidden text-center max-w-5xl mx-auto py-20">
+            <motion.div initial={{opacity:0, y:40}} animate={{opacity:1, y:0}} transition={{delay:0.2}} className="space-y-8">
+              <div className="w-28 h-28 sm:w-36 sm:h-36 mx-auto rounded-3xl animate-gradient p-1 shadow-2xl flex items-center justify-center text-5xl sm:text-7xl">
+                🧑‍💻
+              </div>
+              <h1 className="text-5xl sm:text-6xl font-black leading-tight bg-gradient-to-r from-slate-900 via-blue-900 to-purple-900 dark:from-white dark:via-blue-100 dark:to-purple-100 bg-clip-text text-transparent">
+                {t.hero.title}
+              </h1>
+              <p className="text-xl sm:text-2xl text-slate-700 dark:text-slate-300 max-w-3xl mx-auto leading-relaxed">
+                {t.hero.subtitle}
+              </p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-md mx-auto pt-6">
+                <a href="/resume-dummy.pdf" download className="bg-gradient-to-r from-blue-500 to-purple-600 text-white py-3 rounded-xl font-semibold shadow-lg hover:shadow-2xl transition-all flex justify-center items-center gap-2 text-lg hover:-translate-y-1 transform">
+                  {t.hero.cta1} <span>📄</span>
+                </a>
+                <a href="#contact" className="glass-morphism border border-white/30 dark:border-slate-700 text-slate-900 dark:text-white py-3 rounded-xl font-semibold shadow-lg hover:shadow-2xl transition-all flex justify-center items-center gap-2 text-lg hover:-translate-y-1 transform">
+                  {t.hero.cta2} <span>💬</span>
+                </a>
+              </div>
+            </motion.div>
+          </section>
+
+          {/* Skills Section */}
+          <section id="skills" className="max-w-7xl mx-auto px-4 py-16 sm:py-20">
+            <h2 className="text-4xl font-black text-center mb-16 text-gradient bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+              {t.skillsTitle}
+            </h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+              {skills.map(({category, tools}, idx) => (
+                <motion.div key={idx} whileHover={{y:-8, scale:1.02}} className="hover-lift glass-morphism p-6 rounded-2xl border border-white/20 dark:border-slate-700 shadow-md">
+                  <h3 className="font-bold text-xl mb-4 flex items-center gap-3">
+                    <span className="text-2xl">{category}</span>
+                  </h3>
+                  <ul className="list-disc list-inside text-sm space-y-1 text-slate-600 dark:text-slate-300">
+                    {tools.map(tool => (
+                      <li key={tool}>{tool}</li>
+                    ))}
+                  </ul>
+                </motion.div>
+              ))}
+            </div>
+          </section>
+
+          {/* Contact Section */}
+          <section id="contact" className="max-w-md mx-auto px-4 py-20">
+            <h2 className="text-4xl font-black text-center mb-12 text-gradient bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+              {t.contact.title}
+            </h2>
+            <motion.form
+              action="https://docs.google.com/forms/d/e/1FAIpQLSeYVqEXAMPLE123/formResponse"
+              method="POST"
+              onSubmit={(e) => {
+                e.preventDefault();
+                setFormSubmitted(true);
+                setTimeout(() => setFormSubmitted(false), 4000);
+                e.target.submit();
+              }}
+              className="glass-morphism p-8 rounded-xl shadow-md flex flex-col gap-6 border border-white/20 dark:border-slate-700 max-w-md mx-auto"
+            >
+              <input type="hidden" name="entry.123456789" value={navigator.language} />
+              <input type="text" name="entry.987654321" placeholder={t.contact.name} required className="p-3 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+              <input type="email" name="entry.555666777" placeholder={t.contact.email} required className="p-3 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+              <textarea name="entry.111222333" placeholder={t.contact.message} required rows="5" className="p-3 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 resize-y"></textarea>
+              <button type="submit" className="bg-gradient-to-r from-blue-500 to-purple-600 py-3 rounded-md font-semibold text-white hover:scale-105 transition-transform">
+                {formSubmitted ? "Sending..." : t.contact.submit}
+              </button>
+            </motion.form>
+          </section>
+
+          {/* Footer */}
+          <footer className="text-center text-slate-500 py-8 border-t border-white/20 dark:border-slate-700 max-w-7xl mx-auto px-4">
+            <p>© 2025 Senior QA Engineer. All rights reserved.</p>
+          </footer>
+        </div>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+  </script>
+</body>
+</html>
